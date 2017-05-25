@@ -2,11 +2,11 @@
 A Vue tree by zeromake
 
 ## Install
-``` shell
+``` bash
 npm i github:zeromake/zero-tree
 ```
 ## Use
-``` javscript
+``` javascript
 import ZeroTree from 'zero-tree'
 Vue.use(ZeroTree)
 
