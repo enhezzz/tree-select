@@ -36,14 +36,7 @@ export default {
     data () {
         return {
             isTree: true,
-            propChange: true,
-            treeStore: new ZeroTreeStore(Object.assign({
-                root: this.treeData.slice(0),
-                children: 'children',
-                label: 'label',
-                treeKey: 'id',
-                showCheckbox: true
-            }, this.options), this.$set)
+            propChange: true
         }
     },
     watch: {
@@ -56,11 +49,16 @@ export default {
             } else {
                 this.propChange = true
             }
-        },
-        treeData(newVal) {
-            const treeData = newVal || []
-            this.treeStore = new ZeroTreeStore(Object.assign({
-                root: treeData.slice(0)
+        }
+    },
+    computed: {
+        treeStore() {
+            return new ZeroTreeStore(Object.assign({
+                root: this.treeData.slice(0),
+                children: 'children',
+                label: 'label',
+                treeKey: 'id',
+                showCheckbox: true
             }, this.options), this.$set)
         }
     },

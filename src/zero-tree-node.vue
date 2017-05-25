@@ -3,8 +3,8 @@
         <li
             v-for='item in nodeData'
             v-show="!item.disable"
-            :class="[(item.children && item.children.length > 0) ? 'folder' : 'file', 'level-' + level]"><svg class="icon"
-                v-if="item.children && item.children.length > 0"
+            :class="[(item[options.children] && item[options.children].length > 0) ? 'folder' : 'file', 'level-' + level]"><svg class="icon"
+                v-if="item[options.children] && item[options.children].length > 0"
                 @click="handleNodeExpand(item)">
                 <use v-if="item.open" xlink:href="#down"></use>
                 <use v-else xlink:href="#right"></use>
@@ -15,15 +15,15 @@
                 v-model='item.checked'
                 @click.stop="handlecheckedChange(item)"/><span
                 @click="handleNode(item)"
-                :class="{'node-selected':(item.checked && !options.showCheckbox) || item.searched }">
+                :class="{'node-selected':item.checked && !options.showCheckbox }">
                 {{item.label}}
             </span>
             <zero-tree-node
-                v-if="item.children && item.children.length > 0"
+                v-if="item[options.children] && item[options.children].length > 0"
                 :options="options"
                 @handlecheckedChange="handlecheckedChange"
                 v-show='item.open'
-                :tree-data="item.children"
+                :tree-data="item[options.children]"
                 :level="level + 1"
                 >
             </zero-tree-node>
@@ -50,7 +50,11 @@ export default {
     },
     data () {
         return {
-            nodeData: []
+        }
+    },
+    computed: {
+        nodeData() {
+            return this.treeData.slice(0)
         }
     },
     created () {
@@ -60,7 +64,6 @@ export default {
         } else {
             this.tree = parent.tree
         }
-        this.nodeData = this.treeData.slice(0)
     },
     methods: {
         handleNodeExpand (node) {
@@ -128,17 +131,17 @@ export default {
         border-left: 1px dashed #999;
         bottom: 50px;
         height: 100%;
-        top: -35px;
+        top: -18px;
         width: 1px;
     }
     .zero-tree li.folder:after {
         border-top: 1px dashed #999;
         height: 20px;
-        top: 18px;
+        top: 24px;
         width: 8px;
     }
     .zero-tree li.folder:last-child::before {
-        height: 50px
+        height: 42px
     }
     .zero-tree li.file:after,
     .zero-tree li.file:before {
@@ -152,7 +155,7 @@ export default {
         left: -29px;
         bottom: 50px;
         height: 100%;
-        top: 0px;
+        top: -8px;
         width: 1px;
     }
     .zero-tree li.file:after {
@@ -163,16 +166,7 @@ export default {
         width: 28px;
     }
     .zero-tree li.file:last-child::before {
-        height: 18px
-    }
-    .zero-tree li.level-1:before,
-    .zero-tree li.level-1:after,
-    .zero-tree li.file.level-2:before,
-    .zero-tree li.level-1:last-child::before
-    {
-        border: none;
-        height: 0;
-        width: 0;
+        height: 26px
     }
 </style>
 

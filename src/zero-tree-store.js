@@ -18,7 +18,7 @@ export default function ZeroTreeStore (options, set) {
             node.checked === undefined && set(node, 'checked', false)
             if (node[this.options.children] && node[this.options.children].length > 0) {
                 node.open === undefined && set(node, 'open', false)
-                _traverseNodes(node[this.options.children], node.id)
+                _traverseNodes(node[this.options.children], node[this.options.treeKey])
             }
         }
     })
