@@ -11,7 +11,7 @@ import ZeroTree from 'zero-tree'
 Vue.use(ZeroTree)
 
 new Vue({
-    template: '<div id="app"><zero-tree v-model="keys" :treeData="treeData"/><span></div>',
+    template: '<div id="app"><zero-tree v-model="keys" :treeData="treeData"/><span>{{keys}}</span></div>',
     data: function() {
         return {
             keys: [],

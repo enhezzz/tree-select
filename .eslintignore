@@ -1,2 +1,2 @@
 build/*.js
-wep_app/static/*.js
+dist/*.js
