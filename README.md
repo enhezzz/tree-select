@@ -80,7 +80,7 @@ new Vue({
 | treeKey | tree key | String | false | 'id' |
 | checkFolder | no check's tree check folder  | Boolean | false | fasle |
 
-### treeData(Array<Object>)
+### treeData(Array[Object])
 > tree data
 
 | name | remark | type | required | default|
@@ -91,7 +91,7 @@ new Vue({
 | open | node is expand | Boolean | false | false |
 | checked | node is checked | Boolean | false | fasle |
 
-### v-model(Array(any))
+### v-model(Array[Any]])
 > checked node's treeKey Array
 
 > set v-model checked key node
