@@ -69,7 +69,9 @@ new Vue({
 })
 ```
 ## prop
+
 ### options(Object)
+
 | name | remark | type | required | default|
 | ---- | ------ | ---- | -------- | ------ |
 | showCheckbox | is check tree | Boolean | false | true |
@@ -79,6 +81,7 @@ new Vue({
 | checkFolder | no check's tree check folder  | Boolean | false | fasle |
 
 ### treeData(Array<Object>)
+
 | name | remark | type | required | default|
 | ---- | ------ | ---- | -------- | ------ |
 | id[options.treeKey] | tree key | Any | true | - |
@@ -86,6 +89,7 @@ new Vue({
 | children[options.children] | children tree key | String | true | - |
 | open | node is expand | Boolean | false | false |
 | checked | node is checked | Boolean | false | fasle |
+
 ### v-model(Array(any))
 > checked node's treeKey Array
 
