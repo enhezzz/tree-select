@@ -8,6 +8,7 @@
     "url": "git+https://github.com/zeromake/zero-tree"
   },
   "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack --watch --progress --colors --config build/webpack.config.js",
     "build": "cross-env NODE_ENV=production webpack --progress --colors --config build/webpack.config.js",
     "dev_build": "cross-env NODE_ENV=development ANALY=dev webpack --progress --colors --config build/webpack.config.js"
   },
@@ -45,6 +46,8 @@
     "extract-text-webpack-plugin": "^2.1.0",
     "format-webpack-stats-errors-warnings": "^2.1.0",
     "ghooks": "^2.0.0",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.1",
     "validate-commit-msg": "^2.12.1",
     "vue-hot-reload-api": "^2.1.0",
     "vue-loader": "^12.0.3",

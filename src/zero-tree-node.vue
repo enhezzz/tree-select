@@ -5,7 +5,7 @@
             v-show="!item.disable"
             :class="[(item[options.children] && item[options.children].length > 0) ? 'folder' : 'file', 'level-' + level]"><svg class="icon"
                 v-if="item[options.children] && item[options.children].length > 0"
-                @click="handleNodeExpand(item)">
+                @click.stop="handleNodeExpand(item)">
                 <use v-if="item.open" xlink:href="#down"></use>
                 <use v-else xlink:href="#right"></use>
             </svg><input
@@ -13,11 +13,11 @@
                 class="check"
                 v-if="options.showCheckbox"
                 v-model='item.checked'
-                @click.stop="handlecheckedChange(item)"/><span
+                @click.stop="handlecheckedChange(item)"/><slot :item="item"><span
                 @click="handleNode(item)"
                 :class="{'node-selected':item.checked && !options.showCheckbox }">
                 {{item.label}}
-            </span>
+            </span></slot>
             <zero-tree-node
                 v-if="item[options.children] && item[options.children].length > 0"
                 :options="options"
@@ -81,92 +81,61 @@ export default {
 }
 </script>
 
-<style scoped>
-    .node-selected {
-        background-color: #ddd;
-    }
-    .check {
-        display: inline-block;
-        position: relative;
-        top: 2px;
-    }
-    .zero-tree {
-        min-height: 20px;
-    }
-    .zero-tree li {
-        margin: 0;
-        padding: 5px 5px 5px 0;
-        position: relative;
-        list-style: none;
-    }
-    .zero-tree>ul {
-        padding-left: 0;
-    }
-    .zero-tree>ul ul {
-        padding-left: 1rem;
-    }
-    .zero-tree li.file {
-        margin-left: 26px;
-    }
-    .zero-tree .icon {
-        width: 16px;
-        height: 16px;
-        display: inline-block;
-        vertical-align: middle;
-        padding: 5px;
-        margin-right: 0;
-        cursor: pointer;
-        background-color: white;
-    }
-    
-    .zero-tree li.folder:after,
-    .zero-tree li.folder:before {
-        content: '';
-        left: -4px;
-        position: absolute;
-        right: auto;
-        border-width: 1px
-    }
-    .zero-tree li.folder:before {
-        border-left: 1px dashed #999;
-        bottom: 50px;
-        height: 100%;
-        top: -18px;
-        width: 1px;
-    }
-    .zero-tree li.folder:after {
-        border-top: 1px dashed #999;
-        height: 20px;
-        top: 24px;
-        width: 8px;
-    }
-    .zero-tree li.folder:last-child::before {
-        height: 42px
-    }
-    .zero-tree li.file:after,
-    .zero-tree li.file:before {
-        content: '';
-        position: absolute;
-        right: auto;
-        border-width: 1px
-    }
-    .zero-tree li.file:before {
-        border-left: 1px dashed #999;
-        left: -29px;
-        bottom: 50px;
-        height: 100%;
-        top: -8px;
-        width: 1px;
-    }
-    .zero-tree li.file:after {
-        border-top: 1px dashed #999;
-        left: -29px;
-        height: 20px;
-        top: 19px;
-        width: 28px;
-    }
-    .zero-tree li.file:last-child::before {
-        height: 26px
-    }
+<style scoped lang="stylus">
+    icon-width = 16px /*1.1428rem*/
+    icon-padding = 5px /*0.3571rem*/
+    li-padding = 5px /*0.3571rem*/
+    ul-padding-left = icon-width
+    li-height = icon-width + icon-padding * 2 + li-padding * 2
+    file-margin-left = icon-width + icon-padding * 2
+    folder-left = icon-padding
+    li-after-width = icon-padding + ul-padding-left - icon-width
+    folder-left = ul-padding-left - (file-margin-left / 2)
+    .node-selected
+        background-color: #ddd
+    .check
+        display inline-block
+        position relative
+        top 4px
+    .zero-tree
+        min-height 20px
+        li
+            margin 0
+            padding li-padding li-padding li-padding 0
+            position relative
+            list-style none
+        ul
+            padding-left ul-padding-left
+        li.file
+            margin-left file-margin-left
+        .icon
+            width icon-width
+            height icon-width
+            display inline-block
+            vertical-align middle
+            padding icon-padding
+            margin-right 0
+            cursor pointer
+            background-color white
+        li:after, li:before
+            content ''
+            left -(folder-left)
+            position absolute
+            border-width 1px
+        li:before
+            border-left: 1px dashed #999
+            height 100%
+            top -(li-padding)
+            width 1px
+        li:after
+            border-top 1px dashed #999
+            top (li-height / 2)
+            width li-after-width
+        li:last-child::before
+            height (li-height / 2 + li-padding)
+        li.file:after, li.file:before
+            left -(folder-left + file-margin-left)
+        li.file:after
+            width folder-left + file-margin-left
 </style>
 

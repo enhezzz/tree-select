@@ -2,8 +2,9 @@
     <div class="zero-tree">
         <zero-tree-node
             :treeData='treeStore.root'
-            :options="options"
+            :options="treeOption"
             @handlecheckedChange="handlecheckedChange"
+            @handleNodeCheck="handleNodeCheck"
             >
         </zero-tree-node>
     </div>
@@ -54,12 +55,11 @@ export default {
     computed: {
         treeStore() {
             return new ZeroTreeStore(Object.assign({
-                root: this.treeData.slice(0),
-                children: 'children',
-                label: 'label',
-                treeKey: 'id',
-                showCheckbox: true
-            }, this.options), this.$set)
+                root: this.treeData.slice(0)
+            }, this.treeOption), this.$set)
+        },
+        treeOption() {
+            return Object.assign({ children: 'children', label: 'label', treeKey: 'id', showCheckbox: true }, this.options)
         }
     },
     created () {
@@ -70,6 +70,12 @@ export default {
             this.propChange = false
             this.$emit('input', this.treeStore.getCheckIds())
             this.$emit('handlecheckedChange', node)
+        },
+        handleNodeCheck(node) {
+            const children = node[this.options.children]
+            if (children && children.length > 0) {
+                node.open = !node.open
+            }
         }
     }
 }
