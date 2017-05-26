@@ -81,7 +81,7 @@ new Vue({
 | checkFolder | no check's tree check folder  | Boolean | false | fasle |
 
 ### treeData(Array<Object>)  
-
+tree data
 | name | remark | type | required | default|
 | ---- | ------ | ---- | -------- | ------ |
 | id[options.treeKey] | tree key | Any | true | - |
