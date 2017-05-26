@@ -80,7 +80,7 @@ new Vue({
 | treeKey | tree key | String | false | 'id' |
 | checkFolder | no check's tree check folder  | Boolean | false | fasle |
 
-### treeData(Array<Object>)
+### treeData(Array<Object>)  
 
 | name | remark | type | required | default|
 | ---- | ------ | ---- | -------- | ------ |
