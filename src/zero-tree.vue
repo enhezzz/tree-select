@@ -3,7 +3,7 @@
         <zero-tree-node
             :treeData='treeStore.root'
             :options="treeOption"
-            @handlecheckedChange="handlecheckedChange"
+            @handleCheckedChange="handleCheckedChange"
             @handleNodeCheck="handleNodeCheck"
             >
         </zero-tree-node>
@@ -44,9 +44,7 @@ export default {
         value(newVal) {
             if (this.propChange) {
                 this.treeStore.checkAll(false)
-                setTimeout(() => {
-                    this.treeStore.changeCheckByKey(newVal, true)
-                }, 0)
+                this.treeStore.changeCheckByKey(newVal, true)
             } else {
                 this.propChange = true
             }
@@ -65,17 +63,30 @@ export default {
     created () {
     },
     methods: {
-        handlecheckedChange(node) {
+        handleCheckedChange(node) {
             this.treeStore.changeCheckStatus(node)
             this.propChange = false
             this.$emit('input', this.treeStore.getCheckIds())
-            this.$emit('handlecheckedChange', node)
+            this.$emit('handleCheckedChange', node)
         },
         handleNodeCheck(node) {
-            const children = node[this.options.children]
+            const children = node[this.treeOption.children]
             if (children && children.length > 0) {
                 node.open = !node.open
             }
+            this.$emit('handleNodeCheck')
+        },
+        checkAll(check) {
+            this.treeStore.checkAll(check)
+            this.propChange = false
+            this.$emit('input', this.treeStore.getCheckIds())
+            this.$emit('handleCheckedChange')
+        },
+        checkKey(key, check) {
+            this.treeStore.checkNodeDeep(key, check)
+            this.propChange = false
+            this.$emit('input', this.treeStore.getCheckIds())
+            this.$emit('handleCheckedChange')
         }
     }
 }

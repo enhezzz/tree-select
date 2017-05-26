@@ -61,5 +61,5 @@ new Vue({
     }
 })
 ```
-
-
+## Thank
+[vue2-tree](https://github.com/halower/vue2-tree) by @halower

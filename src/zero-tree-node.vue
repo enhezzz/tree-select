@@ -13,15 +13,16 @@
                 class="check"
                 v-if="options.showCheckbox"
                 v-model='item.checked'
-                @click.stop="handlecheckedChange(item)"/><slot :item="item"><span
-                @click="handleNode(item)"
+                @click.stop="handleCheckedChange(item)"/><slot :item="item"><span
+                @click.stop="handleNodeCheck(item)"
                 :class="{'node-selected':item.checked && !options.showCheckbox }">
                 {{item.label}}
             </span></slot>
             <zero-tree-node
                 v-if="item[options.children] && item[options.children].length > 0"
                 :options="options"
-                @handlecheckedChange="handlecheckedChange"
+                @handleCheckedChange="handleCheckedChange"
+                @handleNodeCheck="handleNodeCheck"
                 v-show='item.open'
                 :tree-data="item[options.children]"
                 :level="level + 1"
@@ -69,13 +70,14 @@ export default {
         handleNodeExpand (node) {
             node.open = !node.open
         },
-        handlecheckedChange (node) {
+        handleCheckedChange (node) {
             this.$nextTick(() => {
-                this.$emit('handlecheckedChange', node)
+                this.$emit('handleCheckedChange', node)
             })
         },
-        handleNode (node) {
-            this.tree.$emit('node-click', node)
+        handleNodeCheck (node) {
+            this.$emit('handleNodeCheck', node)
+            // this.tree.$emit('node-click', node)
         }
     }
 }
