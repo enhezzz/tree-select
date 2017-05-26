@@ -85,14 +85,7 @@ ZeroTreeStore.prototype.sameSilibingChecked = function (parent, currentId) {
     return true
 }
 ZeroTreeStore.prototype.getCheckIds = function () {
-    const keys = []
-    for (const key in this.datas) {
-        const node = this.datas[key]
-        if (node.checked) {
-            keys.push(node[this.options.treeKey])
-        }
-    }
-    return keys
+    return this.getCheckNodes().map((i) => i[this.options.treeKey])
 }
 ZeroTreeStore.prototype.changeCheckByKey = function (keys, check = true) {
     const self = this
@@ -121,12 +114,15 @@ ZeroTreeStore.prototype.checkNodeDeep = function (key, check = false) {
     return false
 }
 ZeroTreeStore.prototype.getCheckLabels = function () {
-    const labels = []
+    return this.getCheckNodes().map((i) => i[this.options.label])
+}
+ZeroTreeStore.prototype.getCheckNodes = function () {
+    const nodes = []
     for (const key in this.datas) {
         const node = this.datas[key]
         if (node.checked) {
-            labels.push(node[this.options.label])
+            nodes.push(node)
         }
     }
-    return labels
+    return nodes
 }

@@ -31,7 +31,7 @@ export default {
         options: {
             type: Object,
             default () {
-                return { children: 'children', label: 'label', treeKey: 'id', showCheckbox: true }
+                return {}
             }
         },
         value: {
@@ -111,6 +111,9 @@ export default {
         },
         getCheckLabels() {
             return this.treeStore.getCheckLabels()
+        },
+        getCheckNode() {
+            return this.treeStore.getCheckNode()
         }
     }
 }

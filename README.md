@@ -8,10 +8,17 @@ npm i github:zeromake/zero-tree
 ## Use
 ``` javascript
 import ZeroTree from 'zero-tree'
-Vue.use(ZeroTree)
+import 'zero-tree/dist/zero-tree.min.css'
+
+Vue.use(ZeroTree) // mount svg
+//ZeroTree.install() // mount svg
 
 new Vue({
-    template: '<div id="app"><zero-tree v-model="keys" :treeData="treeData"/><span>{{keys}}</span></div>',
+    el: '#app',
+    template: '<div id="app">\
+                <zero-tree v-model="keys" :treeData="treeData"/>\
+                <span>{{keys}}</span>\
+               </div>',
     data: function() {
         return {
             keys: [],
@@ -61,5 +68,46 @@ new Vue({
     }
 })
 ```
+## prop
+### options(Object)
+| name | remark | type | required | default|
+| ---- | ------ | ---- | -------- | ------ |
+| showCheckbox | is check tree | Boolean | false | true |
+| children | children tree key | String | false | 'children' |
+| label | label key | String | false | 'label' |
+| treeKey | tree key | String | false | 'id' |
+| checkFolder | no check's tree check folder  | Boolean | false | fasle |
+
+### treeData(Array<Object>)
+| name | remark | type | required | default|
+| ---- | ------ | ---- | -------- | ------ |
+| id[options.treeKey] | tree key | Any | true | - |
+| label[options.label] | node text | String | true | - |
+| children[options.children] | children tree key | String | true | - |
+| open | node is expand | Boolean | false | false |
+| checked | node is checked | Boolean | false | fasle |
+### v-model(Array(any))
+> checked node's treeKey Array
+
+> set v-model checked key node
+
+## Method
+- getCheckLabels() get check node's label Array
+- getCheckNode() get check node's Array
+- checkKey(key, check) set node deep checked
+- checkAll(check) check all node or uncheck all node
+
+## slot
+``` html
+<template scope="props">
+    {{props.item.label}}
+</teplate>
+```
+## Todo
+- [ ] unit test
+- [ ] travis
+- [ ] coverage
+- [ ] npm
+
 ## Thank
 [vue2-tree](https://github.com/halower/vue2-tree) by @halower
