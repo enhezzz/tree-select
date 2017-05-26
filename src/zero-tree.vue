@@ -6,6 +6,14 @@
             @handleCheckedChange="handleCheckedChange"
             @handleNodeCheck="handleNodeCheck"
             >
+            <template scope="props">
+                <slot :item="props.item">
+                    <span
+                    :class="{'node-selected':props.item.checked && !options.showCheckbox }">
+                    {{props.item.label}}
+                    </span>
+                </slot>
+            </template>
         </zero-tree-node>
     </div>
 </template>
@@ -57,7 +65,7 @@ export default {
             }, this.treeOption), this.$set)
         },
         treeOption() {
-            return Object.assign({ children: 'children', label: 'label', treeKey: 'id', showCheckbox: true }, this.options)
+            return Object.assign({ children: 'children', label: 'label', treeKey: 'id', showCheckbox: true, checkFolder: false }, this.options)
         }
     },
     created () {
@@ -72,7 +80,20 @@ export default {
         handleNodeCheck(node) {
             const children = node[this.treeOption.children]
             if (children && children.length > 0) {
-                node.open = !node.open
+                if (this.treeOption.checkFolder && !this.treeOption.showCheckbox) {
+                    node.checked = !node.checked
+                    this.treeStore.changeCheckStatus(node)
+                    this.propChange = false
+                    this.$emit('input', this.treeStore.getCheckIds())
+                    this.$emit('handleCheckedChange')
+                } else {
+                    node.open = !node.open
+                }
+            } else if (!this.treeOption.showCheckbox) {
+                node.checked = !node.checked
+                this.propChange = false
+                this.$emit('input', this.treeStore.getCheckIds())
+                this.$emit('handleCheckedChange')
             }
             this.$emit('handleNodeCheck')
         },
@@ -91,3 +112,6 @@ export default {
     }
 }
 </script>
+
+<style scoped lang="stylus">
+</style>

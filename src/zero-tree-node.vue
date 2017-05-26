@@ -3,21 +3,29 @@
         <li
             v-for='item in nodeData'
             v-show="!item.disable"
-            :class="[(item[options.children] && item[options.children].length > 0) ? 'folder' : 'file', 'level-' + level]"><svg class="icon"
+            :class="[(item[options.children] && item[options.children].length > 0) ? 'folder' : 'file', 'level-' + level]"><div class="li-content"><svg class="icon"
                 v-if="item[options.children] && item[options.children].length > 0"
                 @click.stop="handleNodeExpand(item)">
                 <use v-if="item.open" xlink:href="#down"></use>
                 <use v-else xlink:href="#right"></use>
-            </svg><input
+            </svg><div v-else class="icon-blank"></div>
+                <div class="icon-blank" @click="handleCheckedChange(item)"><svg class="icon"
+                    
+                    v-if="options.showCheckbox">
+                    <use v-if="item.checked" xlink:href="#check"></use>
+                    <use v-else xlink:href="#uncheck"></use>
+                </svg>
+                </div>
+            <!--<input
                 type="checkbox"
                 class="check"
                 v-if="options.showCheckbox"
                 v-model='item.checked'
-                @click.stop="handleCheckedChange(item)"/><slot :item="item"><span
+                @click.stop="handleCheckedChange(item)"/>--><div
+                class="li-slot"
                 @click.stop="handleNodeCheck(item)"
-                :class="{'node-selected':item.checked && !options.showCheckbox }">
-                {{item.label}}
-            </span></slot>
+                ><slot :item="item"></slot></div>
+            </div>
             <zero-tree-node
                 v-if="item[options.children] && item[options.children].length > 0"
                 :options="options"
@@ -27,6 +35,10 @@
                 :tree-data="item[options.children]"
                 :level="level + 1"
                 >
+                <template scope="props">
+                    <slot :item="props.item">
+                    </slot>
+                </template>
             </zero-tree-node>
         </li>
     </ul>
@@ -59,18 +71,20 @@ export default {
         }
     },
     created () {
-        const parent = this.$parent
+        /* const parent = this.$parent
         if (parent.isTree) {
             this.tree = parent
         } else {
             this.tree = parent.tree
-        }
+        } */
     },
     methods: {
         handleNodeExpand (node) {
             node.open = !node.open
         },
         handleCheckedChange (node) {
+            console.log(node)
+            node.checked = !node.checked
             this.$nextTick(() => {
                 this.$emit('handleCheckedChange', node)
             })
@@ -84,8 +98,8 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-    icon-width = 16px /*1.1428rem*/
-    icon-padding = 5px /*0.3571rem*/
+    icon-width = 20px /*1.1428rem*/
+    icon-padding = 2px /*0.3571rem*/
     li-padding = 5px /*0.3571rem*/
     ul-padding-left = icon-width
     li-height = icon-width + icon-padding * 2 + li-padding * 2
@@ -93,12 +107,9 @@ export default {
     folder-left = icon-padding
     li-after-width = icon-padding + ul-padding-left - icon-width
     folder-left = ul-padding-left - (file-margin-left / 2)
+    input-size = 16px
     .node-selected
-        background-color: #ddd
-    .check
-        display inline-block
-        position relative
-        top 4px
+        border 1px solid #66B3FF
     .zero-tree
         min-height 20px
         li
@@ -106,19 +117,23 @@ export default {
             padding li-padding li-padding li-padding 0
             position relative
             list-style none
+        .li-content
+            display inline-block
+            height icon-width + icon-padding * 2
+        .li-slot
+            display inline-block
         ul
             padding-left ul-padding-left
-        li.file
-            margin-left file-margin-left
-        .icon
+        .icon, .icon-blank
             width icon-width
             height icon-width
             display inline-block
             vertical-align middle
             padding icon-padding
             margin-right 0
-            cursor pointer
             background-color white
+        .icon
+            cursor pointer
         li:after, li:before
             content ''
             left -(folder-left)
@@ -136,7 +151,7 @@ export default {
         li:last-child::before
             height (li-height / 2 + li-padding)
         li.file:after, li.file:before
-            left -(folder-left + file-margin-left)
+            left -(folder-left)
         li.file:after
             width folder-left + file-margin-left
 </style>

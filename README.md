@@ -18,41 +18,41 @@ new Vue({
             treeData: [
                 {
                     id: 1,
-                    label: 'leve1-1',
+                    label: 'level1-1',
                     children: [
                         {
                             id: 4,
-                            label: 'leve2-1'
+                            label: 'level2-1'
                         },
                         {
                             id: 5,
-                            label: 'leve2-2'
+                            label: 'level2-2'
                         },
                         {
                             id: 6,
-                            label: 'leve2-3'
+                            label: 'level2-3'
                         }
                     ]
                 },
                 {
                     id: 2,
-                    label: 'leve1-2'
+                    label: 'level1-2'
                 },
                 {
                     id: 3,
-                    label: 'leve1-3',
+                    label: 'level1-3',
                     children: [
                         {
                             id: 7,
-                            label: 'leve2-4'
+                            label: 'level2-4'
                         },
                         {
                             id: 8,
-                            label: 'leve2-5'
+                            label: 'level2-5'
                         },
                         {
                             id: 9,
-                            label: 'leve2-6'
+                            label: 'level2-6'
                         }
                     ]
                 }
