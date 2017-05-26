@@ -120,3 +120,13 @@ ZeroTreeStore.prototype.checkNodeDeep = function (key, check = false) {
     }
     return false
 }
+ZeroTreeStore.prototype.getCheckLabels = function () {
+    const labels = []
+    for (const key in this.datas) {
+        const node = this.datas[key]
+        if (node.checked) {
+            labels.push(node[this.options.label])
+        }
+    }
+    return labels
+}

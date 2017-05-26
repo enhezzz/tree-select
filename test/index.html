@@ -20,16 +20,23 @@
             el: '#app',
             template: `
             <div>
-            <zero-tree v-model="keys" :treeData="treeData" :options="options">
+            <zero-tree @handleCheckedChange="getLabels" ref="tree" v-model="keys" :treeData="treeData" :options="options">
             <template scope="props">
                 2.{{props.item.label}}
             </teplate>
             </zero-tree>
-            <span>{{keys}}</span>
+            <span>{{keys}}</span><br>
+            <span>{{labels}}</span>
             </div>
             `,
+            methods: {
+                getLabels: function() {
+                    this.labels = this.$refs.tree.getCheckLabels()
+                }
+            },
             data: function() {
                 return {
+                    labels: [],
                     keys: [],
                     options: { showCheckbox: true },
                     treeData: [

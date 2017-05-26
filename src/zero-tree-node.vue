@@ -8,15 +8,12 @@
                 @click.stop="handleNodeExpand(item)">
                 <use v-if="item.open" xlink:href="#down"></use>
                 <use v-else xlink:href="#right"></use>
-            </svg><div v-else class="icon-blank"></div>
-                <div class="icon-blank" @click="handleCheckedChange(item)"><svg class="icon"
-                    
-                    v-if="options.showCheckbox">
+            </svg><div v-else class="icon-blank"></div><svg class="icon"
+                    v-if="options.showCheckbox"
+                    @click.stop="handleCheckedChange(item)">
                     <use v-if="item.checked" xlink:href="#check"></use>
                     <use v-else xlink:href="#uncheck"></use>
-                </svg>
-                </div>
-            <!--<input
+                </svg><!--<input
                 type="checkbox"
                 class="check"
                 v-if="options.showCheckbox"
@@ -71,26 +68,34 @@ export default {
         }
     },
     created () {
-        /* const parent = this.$parent
+        const parent = this.$parent
         if (parent.isTree) {
             this.tree = parent
         } else {
             this.tree = parent.tree
-        } */
+        }
     },
     methods: {
         handleNodeExpand (node) {
             node.open = !node.open
         },
-        handleCheckedChange (node) {
-            console.log(node)
-            node.checked = !node.checked
-            this.$nextTick(() => {
-                this.$emit('handleCheckedChange', node)
-            })
+        handleCheckedChange (node, flag) {
+            if (this.tree) {
+                flag || (node.checked = !node.checked)
+                this.tree.handleCheckedChange(node)
+            } else {
+                flag || (node.checked = !node.checked)
+                this.$nextTick(() => {
+                    this.$emit('handleCheckedChange', node, true)
+                })
+            }
         },
         handleNodeCheck (node) {
-            this.$emit('handleNodeCheck', node)
+            if (this.tree) {
+                this.tree.handleNodeCheck(node)
+            } else {
+                this.$emit('handleNodeCheck', node)
+            }
             // this.tree.$emit('node-click', node)
         }
     }
@@ -105,9 +110,8 @@ export default {
     li-height = icon-width + icon-padding * 2 + li-padding * 2
     file-margin-left = icon-width + icon-padding * 2
     folder-left = icon-padding
-    li-after-width = icon-padding + ul-padding-left - icon-width
+    li-after-width = 8px
     folder-left = ul-padding-left - (file-margin-left / 2)
-    input-size = 16px
     .node-selected
         border 1px solid #66B3FF
     .zero-tree

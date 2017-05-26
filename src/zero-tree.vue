@@ -108,6 +108,9 @@ export default {
             this.propChange = false
             this.$emit('input', this.treeStore.getCheckIds())
             this.$emit('handleCheckedChange')
+        },
+        getCheckLabels() {
+            return this.treeStore.getCheckLabels()
         }
     }
 }
