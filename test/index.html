@@ -7,14 +7,13 @@
     <script src="http://cdn.bootcss.com/vue/2.3.3/vue.min.js"></script>
     <script src="/dist/zero-tree.min.js"></script>
     <link rel="stylesheet" href="/dist/zero-tree.min.css">
-    <style>
-    </style>
     <title>tree-test</title>
 </head>
 <body>
     <div id="app">
     </div>
     <script>
+        Vue.config.devtools = true
         Vue.use(ZeroTree)
         new Vue({
             el: '#app',

@@ -23,6 +23,7 @@
                 @click.stop="handleNodeCheck(item)"
                 ><slot :item="item"></slot></div>
             </div>
+            <transition name="fold">
             <zero-tree-node
                 v-if="item[options.children] && item[options.children].length > 0"
                 :options="options"
@@ -37,6 +38,7 @@
                     </slot>
                 </template>
             </zero-tree-node>
+            </transition>
         </li>
     </ul>
 </template>
@@ -144,7 +146,7 @@ export default {
             position absolute
             border-width 1px
         li:before
-            border-left: 1px dashed #999
+            border-left 1px dashed #999
             height 100%
             top -(li-padding)
             width 1px
@@ -158,5 +160,23 @@ export default {
             left -(folder-left)
         li.file:after
             width folder-left + file-margin-left
+        @keyframes showAnimation
+            0%
+                transform scaleY(0)
+            100%
+                transform scaleY(1)
+        @keyframes hideAnimation
+            0%
+                transform scaleY(1)
+            100%
+                transform scaleY(0)
+        .fold-enter-active
+            transform scaleY(1)
+            animation showAnimation 0.1s ease-in-out
+            transform-origin 50% 0%
+        .fold-leave-active
+            transform scaleY(0)
+            animation hideAnimation 0.1s ease-out
+            transform-origin 50% 0%
 </style>
 
