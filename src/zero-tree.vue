@@ -7,11 +7,9 @@
             @handleNodeCheck="handleNodeCheck"
             >
             <template scope="props">
-                <slot :item="props.item">
-                    <span
-                    :class="{'node-selected':props.item.checked && !options.showCheckbox }">
-                    {{props.item.label}}
-                    </span>
+                <slot :item="props.item"><span
+                    :class="{'node-selected':props.item.checked && !options.showCheckbox }"
+                    >{{props.item.label}}</span>
                 </slot>
             </template>
         </zero-tree-node>
