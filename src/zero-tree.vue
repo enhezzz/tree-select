@@ -63,7 +63,13 @@ export default {
             }, this.treeOption), this.$set)
         },
         treeOption() {
-            return Object.assign({ children: 'children', label: 'label', treeKey: 'id', showCheckbox: true, checkFolder: false }, this.options)
+            return Object.assign({
+                children: 'children',
+                label: 'label',
+                treeKey: 'id',
+                showCheckbox: true,
+                checkFolder: false
+            }, this.options)
         }
     },
     created () {
@@ -117,5 +123,5 @@ export default {
 }
 </script>
 
-<style scoped lang="stylus">
+<style lang="stylus">
 </style>
