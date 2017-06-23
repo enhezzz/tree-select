@@ -25,7 +25,6 @@
             </div>
             <transition name="fold">
             <zero-tree-node
-                v-if="item[options.children] && item[options.children].length > 0"
                 :options="options"
                 @handleCheckedChange="handleCheckedChange"
                 @handleNodeCheck="handleNodeCheck"
@@ -172,11 +171,11 @@ export default {
                 transform scaleY(0)
         .fold-enter-active
             transform scaleY(1)
-            animation showAnimation 0.1s ease-in-out
+            animation showAnimation .2s ease-in-out
             transform-origin 50% 0%
         .fold-leave-active
             transform scaleY(0)
-            animation hideAnimation 0.1s ease-out
+            animation hideAnimation .2s ease-in-out
             transform-origin 50% 0%
 </style>
 
