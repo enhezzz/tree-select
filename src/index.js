@@ -30,6 +30,28 @@ ZeroTree.install = function (Vue, svgConfig) {
         document.body.appendChild(svg)
     }
     Vue && Vue.component('zero-tree', ZeroTree)
+    if (!Object.assign) {
+        const assign = function (...args) {
+            const obj = args[0]
+            let target
+            let key
+            let i = 1
+            const len = args.length
+            for (; i < len; i += 1) {
+                target = args[i]
+                for (key in target) {
+                    if (Object.prototype.hasOwnProperty.call(target, key)) {
+                        obj[key] = target[key]
+                    }
+                }
+            }
+            return obj
+        }
+        if (Object.defineProperty) {
+            Object.defineProperty(Object, 'assign', { value: assign })
+        } else {
+            Object.assign = assign
+        }
+    }
 }
-
 module.exports = ZeroTree
