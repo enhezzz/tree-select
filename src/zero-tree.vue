@@ -50,7 +50,8 @@ export default {
         value(newVal) {
             if (this.propChange) {
                 this.treeStore.checkAll(false)
-                this.treeStore.changeCheckByKey(newVal, true)
+                this.treeStore.changeCheckByKey(newVal, true, true)
+                this.$emit('handleCheckedChange')
             } else {
                 this.propChange = true
             }

@@ -2,6 +2,7 @@
     <ul class="zero-tree-node">
         <li
             v-for='item in nodeData'
+            :key="item[options.treeKey]"
             v-show="!item.disable"
             :class="[(item[options.children] && item[options.children].length > 0) ? 'folder' : 'file', 'level-' + level]"><div class="li-content"><svg class="icon"
                 v-if="item[options.children] && item[options.children].length > 0"
@@ -13,23 +14,18 @@
                     @click.stop="handleCheckedChange(item)">
                     <use v-if="item.checked" xlink:href="#check"></use>
                     <use v-else xlink:href="#uncheck"></use>
-                </svg><!--<input
-                type="checkbox"
-                class="check"
-                v-if="options.showCheckbox"
-                v-model='item.checked'
-                @click.stop="handleCheckedChange(item)"/>--><div
+                </svg><div
                 class="li-slot"
                 @click.stop="handleNodeCheck(item)"
                 ><slot :item="item"></slot></div>
             </div>
-            <transition name="fold">
+            <transition name="fold" v-if="item[options.children] && item[options.children].length > 0">
             <zero-tree-node
                 :options="options"
                 @handleCheckedChange="handleCheckedChange"
                 @handleNodeCheck="handleNodeCheck"
                 v-show='item.open'
-                :tree-data="item[options.children]"
+                :treeData="item[options.children]"
                 :level="level + 1"
                 >
                 <template scope="props">

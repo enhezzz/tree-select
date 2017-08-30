@@ -5,6 +5,7 @@ export default function ZeroTreeStore (options, set) {
     this.options = Object.assign({}, options)
     this.datas = {}
     this.len = 0
+    this.flag = false
     const _traverseNodes = tco((root, parentId) => {
         for (let i = 0, len = root.length; i < len; i++) {
             this.len++
@@ -87,7 +88,7 @@ ZeroTreeStore.prototype.sameSilibingChecked = function (parent, currentId) {
 ZeroTreeStore.prototype.getCheckIds = function () {
     return this.getCheckNodes().map((i) => i[this.options.treeKey])
 }
-ZeroTreeStore.prototype.changeCheckByKey = function (keys, check = true) {
+ZeroTreeStore.prototype.changeCheckByKey = function (keys, check = true, isDeep = false) {
     const self = this
     keys.forEach(function(i) {
         const node = self.datas[i]
@@ -95,6 +96,9 @@ ZeroTreeStore.prototype.changeCheckByKey = function (keys, check = true) {
             self.datas[i].checked = check
         }
     })
+    if (isDeep) {
+        return this.NodeDeep()
+    }
 }
 ZeroTreeStore.prototype.checkAll = function (check = false) {
     for (const key in this.datas) {
@@ -125,4 +129,21 @@ ZeroTreeStore.prototype.getCheckNodes = function () {
         }
     }
     return nodes
+}
+
+ZeroTreeStore.prototype.NodeDeep = function() {
+    const Deep = (nodes, parent) => {
+        let check = true
+        nodes.forEach(node => {
+            const children = node[this.options.children]
+            if (children && children.length > 0) {
+                Deep(children, node)
+            }
+            check = check && node.checked
+        })
+        if (parent && parent.checked !== check) {
+            parent.checked = check
+        }
+    }
+    Deep(this.root)
 }
