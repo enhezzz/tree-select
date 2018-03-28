@@ -118,7 +118,7 @@ export default {
             return this.treeStore.getCheckLabels()
         },
         getCheckNode() {
-            return this.treeStore.getCheckNode()
+            return this.treeStore.getCheckNodes()
         }
     }
 }
