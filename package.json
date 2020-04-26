@@ -1,6 +1,6 @@
 {
   "name": "zero-tree",
-  "version": "1.0.0",
+  "version": "0.1.4",
   "description": "A Vue tree by zeromake",
   "main": "index.js",
   "directories": {
