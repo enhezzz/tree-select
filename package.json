@@ -12,7 +12,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --colors --config build/webpack.config.js",
     "dev_build": "cross-env NODE_ENV=development ANALY=dev webpack --progress --colors --config build/webpack.config.js"
   },
-  "author": "zeromake <fly-zero@hotmail.com>",
+  "author": "admin",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/zeromake/zero-tree/issues"

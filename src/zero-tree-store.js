@@ -24,10 +24,10 @@ export default function ZeroTreeStore (options, set) {
         }
     })
     _traverseNodes(this.root, null)
-    if (this.len > 2000) {
+    if (this.len > 5000) {
         this.datas = null
         this.root = []
-        throw new Error('node len > 2000 clear root len:' + this.len)
+        throw new Error('node len > 5000 clear root len:' + this.len)
     }
 }
 ZeroTreeStore.prototype.changeCheckStatus = function (node) {
