@@ -1,33 +1,14 @@
 {
   "name": "zero-tree",
-  "version": "0.1.4",
-  "description": "A Vue Tree by zeromake",
+  "version": "1.0.0",
+  "description": "A Vue tree by zeromake",
   "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/zeromake/zero-tree"
+  "directories": {
+    "test": "test"
   },
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack --watch --progress --colors --config build/webpack.config.js",
-    "build": "cross-env NODE_ENV=production webpack --progress --colors --config build/webpack.config.js",
-    "dev_build": "cross-env NODE_ENV=development ANALY=dev webpack --progress --colors --config build/webpack.config.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "admin",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/zeromake/zero-tree/issues"
-  },
-  "keywords": [
-    "vue",
-    "tree",
-    "vue-tree"
-  ],
-  "files": [
-    "index.js",
-    "LICENSE",
-    "README.md",
-    "dist"
-  ],
   "devDependencies": {
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
@@ -59,12 +40,7 @@
     "vue": "^2.3.0"
   },
   "dependencies": {},
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    },
-    "ghooks": {
-      "commit-msg": "validate-commit-msg"
-    }
-  }
+  "keywords": [],
+  "author": "admin",
+  "license": "ISC"
 }
